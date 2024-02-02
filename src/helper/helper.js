@@ -42,7 +42,7 @@ const randomPlaceIndexFunc = (arr) => {
   }
   const num = Math.random() * 100;
   const finalNum = Math.round(num) % indexOfZeros.length;
-  const newNumProbability = Math.random() > 0.9 ? 2 : 4;
+  const newNumProbability = Math.random() < 0.9 ? 2 : 4;
   console.log(newNumProbability);
   arr[indexOfZeros[finalNum]] = newNumProbability;
 };
