@@ -1,10 +1,10 @@
 import { StyledBigDiv, StyledCell } from "./styles/boxes";
 import "./App.css";
-import { rightArrFunc, leftArrFunc, upArrFunc, downArrFunc } from "./helper/helper";
+import { rightArrFunc, leftArrFunc, upArrFunc, downArrFunc, startArrFunc } from "./helper/helper";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [arr, setArr] = useState([0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [arr, setArr] = useState(startArrFunc());
 
   useEffect(() => {
     const handleKeyDown = (event) => {

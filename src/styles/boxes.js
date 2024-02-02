@@ -30,7 +30,9 @@ export const StyledCell = styled.div`
         props.id === "128" ||
         props.id === "256" ||
         props.id === "512" ||
-        props.id === "1024"
+        props.id === "1024" ||
+        props.id === "2048" ||
+        props.id === "4096"
       ? "#f9f6f2"
       : "transparent"};
   background-color: ${(props) =>
@@ -49,7 +51,15 @@ export const StyledCell = styled.div`
       : props.id === "128"
       ? "#edd073"
       : props.id === "256"
-      ? "##f0cc64"
+      ? "#f0cc64"
+      : props.id === "512"
+      ? "#f0cc64"
+      : props.id === "1024"
+      ? "#f0cc64"
+      : props.id === "2048"
+      ? "#f0cc64"
+      : props.id === "4096"
+      ? "#f0cc64"
       : "#cdc1b4"};
   transition: 0.3s;
 `;

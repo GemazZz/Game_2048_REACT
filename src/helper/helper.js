@@ -44,6 +44,24 @@ const randomPlaceIndexFunc = (arr) => {
   arr[indexOfZeros[finalNum]] = newNumProbability;
 };
 
+export const startArrFunc = () => {
+  const arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const num1 = Math.random() * 100;
+  const num2 = Math.random() * 100;
+  const indexNum1 = Math.round(num1) % 16;
+  let indexNum2 = Math.round(num2) % 16;
+  if (indexNum1 === indexNum2) {
+    if (indexNum1 === 0 || indexNum1 === 1) {
+      indexNum2 += 1;
+    } else {
+      indexNum2 -= 1;
+    }
+  }
+  arr[indexNum1] = 2;
+  arr[indexNum2] = 2;
+  return arr;
+};
+
 export const rightArrFunc = (arr) => {
   const startArr = [...arr];
   allTogetherFunc(arr, 0, 1, 2, 3);
