@@ -32,11 +32,9 @@ const allTogetherFunc = (arr, num0, num1, num2, num3) => {
 };
 
 const randomPlaceIndexFunc = (arr) => {
-  let zeroCount = 0;
   const indexOfZeros = [];
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] === 0) {
-      zeroCount += 1;
       indexOfZeros.push(i);
     }
   }

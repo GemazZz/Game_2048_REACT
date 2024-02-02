@@ -51,5 +51,5 @@ export const StyledCell = styled.div`
       : props.id === "256"
       ? "##f0cc64"
       : "#cdc1b4"};
-  transition: 0.1s;
+  transition: 0.3s;
 `;
