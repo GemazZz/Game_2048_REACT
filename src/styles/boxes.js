@@ -23,7 +23,14 @@ export const StyledCell = styled.div`
   color: ${(props) =>
     props.id === "2" || props.id === "4"
       ? "#776e65"
-      : props.id === "8" || props.id === "16" || props.id === "32" || props.id === "64" || props.id === "128"
+      : props.id === "8" ||
+        props.id === "16" ||
+        props.id === "32" ||
+        props.id === "64" ||
+        props.id === "128" ||
+        props.id === "256" ||
+        props.id === "512" ||
+        props.id === "1024"
       ? "#f9f6f2"
       : "transparent"};
   background-color: ${(props) =>
@@ -41,6 +48,8 @@ export const StyledCell = styled.div`
       ? "#f75f3b"
       : props.id === "128"
       ? "#edd073"
+      : props.id === "256"
+      ? "##f0cc64"
       : "#cdc1b4"};
   transition: 0.1s;
 `;
