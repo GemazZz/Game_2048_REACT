@@ -20,7 +20,27 @@ export const StyledCell = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => (props.id === "2" || props.id === "4" ? "#776e65" : props.id === "8" || props.id === "16" ? "#f9f6f2" : "#cdc1b4")};
+  color: ${(props) =>
+    props.id === "2" || props.id === "4"
+      ? "#776e65"
+      : props.id === "8" || props.id === "16" || props.id === "32" || props.id === "64" || props.id === "128"
+      ? "#f9f6f2"
+      : "transparent"};
   background-color: ${(props) =>
-    props.id === "2" ? "#eee4da" : props.id === "4" ? "#ede0c8" : props.id === "8" ? "#f2b179" : props.id === "16" ? "#f59563" : "#cdc1b4"};
+    props.id === "2"
+      ? "#eee4da"
+      : props.id === "4"
+      ? "#ede0c8"
+      : props.id === "8"
+      ? "#f2b179"
+      : props.id === "16"
+      ? "#f59563"
+      : props.id === "32"
+      ? "#f77c5f"
+      : props.id === "64"
+      ? "#f75f3b"
+      : props.id === "128"
+      ? "#edd073"
+      : "#cdc1b4"};
+  transition: 0.1s;
 `;
