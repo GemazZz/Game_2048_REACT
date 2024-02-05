@@ -4,8 +4,9 @@ import { rightArrFunc, leftArrFunc, upArrFunc, downArrFunc, startArrFunc, isLose
 import { useState, useEffect } from "react";
 
 function App() {
-  const [arr, setArr] = useState(startArrFunc());
-  const [score, setScore] = useState(0);
+  const [arr, setArr] = useState(JSON.parse(localStorage.getItem("currentArr")) || startArrFunc());
+  const [score, setScore] = useState(JSON.parse(localStorage.getItem("currentScore")) || 0);
+  const [best, setBest] = useState(JSON.parse(localStorage.getItem("score")) || 0);
   const isLose = isLoseFunc(arr);
 
   useEffect(() => {
@@ -33,6 +34,13 @@ function App() {
       }
     };
 
+    if (best < score) {
+      setBest(score);
+      localStorage.setItem("score", JSON.stringify(score));
+    }
+    localStorage.setItem("currentArr", JSON.stringify(arr));
+    localStorage.setItem("currentScore", JSON.stringify(score));
+
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
@@ -47,7 +55,7 @@ function App() {
         {isLose && <StyledH1>Game Over</StyledH1>}
         <StyledMiniHeader>
           <div>
-            <StyledScore>Best : Coming Soon!</StyledScore>
+            <StyledScore>Best : {best}</StyledScore>
             <StyledScore>Score : {score}</StyledScore>
           </div>
           <StyledLoseBtn
