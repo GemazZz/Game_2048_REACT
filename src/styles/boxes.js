@@ -104,11 +104,7 @@ export const StyledMiniHeader = styled.div`
 `;
 
 export const StyledScore = styled.div`
-  /* width: 140px; */
-  /* height: 40px; */
   font-size: 25px;
-  /* color: #f9f6f2; */
   font-weight: 700;
-  transition: 0, 3s;
-  /* background-color: #c0aca4; */
+  transition: 0.9s;
 `;

@@ -9,54 +9,24 @@ function App() {
   const [best, setBest] = useState(JSON.parse(localStorage.getItem("score")) || 0);
   const isLose = isLoseFunc(arr);
 
-  const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
-  const [swipeDirection, setSwipeDirection] = useState(null);
-
-  const handleTouchStart = (event) => {
-    setTouchStart({ x: event.touches[0].clientX, y: event.touches[0].clientY });
-  };
-
-  const handleTouchMove = (event) => {
-    event.preventDefault(); // Prevent scrolling while swiping
-  };
-
-  const handleTouchEnd = (event) => {
-    const touchEnd = { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
-    const deltaX = touchEnd.x - touchStart.x;
-    const deltaY = touchEnd.y - touchStart.y;
-    const minSwipeDistance = 50; // Minimum swipe distance in pixels
-
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      // Horizontal swipe
-      if (Math.abs(deltaX) > minSwipeDistance) {
-        setSwipeDirection(deltaX > 0 ? "right" : "left");
-      }
-    } else {
-      // Vertical swipe
-      if (Math.abs(deltaY) > minSwipeDistance) {
-        setSwipeDirection(deltaY > 0 ? "down" : "up");
-      }
-    }
-  };
-
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "ArrowUp" || swipeDirection === "up") {
+      if (event.key === "ArrowUp") {
         console.log("Up");
         const [newArr, sum] = upArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
-      } else if (event.key === "ArrowDown" || swipeDirection === "down") {
+      } else if (event.key === "ArrowDown") {
         console.log("Down");
         const [newArr, sum] = downArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
-      } else if (event.key === "ArrowLeft" || swipeDirection === "left") {
+      } else if (event.key === "ArrowLeft") {
         console.log("Left");
         const [newArr, sum] = leftArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
-      } else if (event.key === "ArrowRight" || swipeDirection === "right") {
+      } else if (event.key === "ArrowRight") {
         console.log("Right");
         const [newArr, sum] = rightArrFunc(arr);
         setArr([...newArr]);
@@ -80,7 +50,7 @@ function App() {
 
   return (
     <StyledDivContainer>
-      <StyledDivContainer style={{ widows: "450px" }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
+      <StyledDivContainer style={{ widows: "450px" }}>
         {!isLose && <StyledH1>2048</StyledH1>}
         {isLose && <StyledH1>Game Over</StyledH1>}
         <StyledMiniHeader>
