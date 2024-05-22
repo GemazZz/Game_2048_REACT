@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 export const StyledBigDiv = styled.div`
   height: 450px;
@@ -11,6 +11,27 @@ export const StyledBigDiv = styled.div`
   flex-wrap: wrap;
   gap: 12px;
   padding: 12px;
+
+  @media (max-width: 600px) {
+    height: 360px;
+    width: 360px;
+    gap: 9.6px;
+    padding: 9.6px;
+  }
+
+  @media (max-width: 480px) {
+    height: 288px;
+    width: 288px;
+    gap: 7.68px;
+    padding: 7.68px;
+  }
+
+  @media (max-width: 384px) {
+    height: 230.4px;
+    width: 230.4px;
+    gap: 6.144px;
+    padding: 6.144px;
+  }
 `;
 
 export const StyledCell = styled.div`
@@ -22,54 +43,73 @@ export const StyledCell = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) =>
-    props.id === "2" || props.id === "4"
-      ? "#776e65"
-      : props.id === "8" ||
-        props.id === "16" ||
-        props.id === "32" ||
-        props.id === "64" ||
-        props.id === "128" ||
-        props.id === "256" ||
-        props.id === "512" ||
-        props.id === "1024" ||
-        props.id === "2048" ||
-        props.id === "4096"
-      ? "#f9f6f2"
-      : "transparent"};
-  background-color: ${(props) =>
-    props.id === "2"
-      ? "#eee4da"
-      : props.id === "4"
-      ? "#ede0c8"
-      : props.id === "8"
-      ? "#f2b179"
-      : props.id === "16"
-      ? "#f59563"
-      : props.id === "32"
-      ? "#f77c5f"
-      : props.id === "64"
-      ? "#f75f3b"
-      : props.id === "128"
-      ? "#edd073"
-      : props.id === "256"
-      ? "#f0cc64"
-      : props.id === "512"
-      ? "#f0cc54"
-      : props.id === "1024"
-      ? "#f0cc64"
-      : props.id === "2048"
-      ? "#f0cc64"
-      : props.id === "4096"
-      ? "#f0cc64"
-      : "#cdc1b4"};
+  color: ${(props) => (["2", "4"].includes(props.id) ? "#776e65" : "#f9f6f2")};
+  background-color: ${(props) => {
+    switch (props.id) {
+      case "2":
+        return "#eee4da";
+      case "4":
+        return "#ede0c8";
+      case "8":
+        return "#f2b179";
+      case "16":
+        return "#f59563";
+      case "32":
+        return "#f77c5f";
+      case "64":
+        return "#f75f3b";
+      case "128":
+        return "#edd073";
+      case "256":
+        return "#f0cc64";
+      case "512":
+        return "#f0cc54";
+      case "1024":
+      case "2048":
+      case "4096":
+        return "#f0cc64";
+      default:
+        return "#cdc1b4";
+    }
+  }};
   transition: 0.4s;
+
+  @media (max-width: 600px) {
+    width: 78px;
+    height: 78px;
+    font-size: 42.4px;
+  }
+
+  @media (max-width: 480px) {
+    width: 62.4px;
+    height: 62.4px;
+    font-size: 33.92px;
+  }
+
+  @media (max-width: 384px) {
+    width: 49.92px;
+    height: 49.92px;
+    font-size: 27.136px;
+  }
 `;
 
 export const StyledH1 = styled.h1`
   display: inline-block;
   font-size: 50px;
+
+  @media (max-width: 600px) {
+    font-size: 40px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 32px;
+  }
+
+  @media (max-width: 384px) {
+    font-size: 25.6px;
+  }
 `;
+
 export const StyledLoseBtn = styled.button`
   width: 30px;
   height: 30px;
@@ -78,11 +118,27 @@ export const StyledLoseBtn = styled.button`
   position: relative;
   color: #000;
   transition: 0.1s;
+
   &:hover {
-    scale: 1.2;
+    transform: scale(1.2);
   }
   &:active {
-    scale: 0.8;
+    transform: scale(0.8);
+  }
+
+  @media (max-width: 600px) {
+    width: 24px;
+    height: 24px;
+  }
+
+  @media (max-width: 480px) {
+    width: 19.2px;
+    height: 19.2px;
+  }
+
+  @media (max-width: 384px) {
+    width: 15.36px;
+    height: 15.36px;
   }
 `;
 
@@ -93,6 +149,18 @@ export const StyledDivContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+
+  @media (max-width: 600px) {
+    gap: 16px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 12.8px;
+  }
+
+  @media (max-width: 384px) {
+    gap: 10.24px;
+  }
 `;
 
 export const StyledMiniHeader = styled.div`
@@ -101,10 +169,34 @@ export const StyledMiniHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 600px) {
+    width: 360px;
+  }
+
+  @media (max-width: 480px) {
+    width: 288px;
+  }
+
+  @media (max-width: 384px) {
+    width: 230.4px;
+  }
 `;
 
 export const StyledScore = styled.div`
   font-size: 25px;
   font-weight: 700;
   transition: 0.9s;
+
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 384px) {
+    font-size: 12.8px;
+  }
 `;
