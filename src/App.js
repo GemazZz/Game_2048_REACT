@@ -87,7 +87,7 @@ function App() {
 
   return (
     <StyledDivContainer onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-      <StyledDivContainer style={{ widows: "450px" }}>
+      <StyledDivContainer>
         {!isLose && <StyledH1>2048</StyledH1>}
         {isLose && <StyledH1>Game Over</StyledH1>}
         <StyledMiniHeader>
