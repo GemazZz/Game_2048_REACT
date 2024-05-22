@@ -7,27 +7,24 @@ function App() {
   const [arr, setArr] = useState(JSON.parse(localStorage.getItem("currentArr")) || startArrFunc());
   const [score, setScore] = useState(JSON.parse(localStorage.getItem("currentScore")) || 0);
   const [best, setBest] = useState(JSON.parse(localStorage.getItem("score")) || 0);
+  const [touchStart, setTouchStart] = useState(null);
   const isLose = isLoseFunc(arr);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "ArrowUp") {
-        console.log("Up");
         const [newArr, sum] = upArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
       } else if (event.key === "ArrowDown") {
-        console.log("Down");
         const [newArr, sum] = downArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
       } else if (event.key === "ArrowLeft") {
-        console.log("Left");
         const [newArr, sum] = leftArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
       } else if (event.key === "ArrowRight") {
-        console.log("Right");
         const [newArr, sum] = rightArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
@@ -46,10 +43,50 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [arr]);
+  }, [arr, score, best]);
+
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    setTouchStart({ x: touch.clientX, y: touch.clientY });
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!touchStart) return;
+
+    const touch = e.changedTouches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    if (absDeltaX > absDeltaY) {
+      if (deltaX > 0) {
+        const [newArr, sum] = rightArrFunc(arr);
+        setArr([...newArr]);
+        setScore(score + sum);
+      } else {
+        const [newArr, sum] = leftArrFunc(arr);
+        setArr([...newArr]);
+        setScore(score + sum);
+      }
+    } else {
+      if (deltaY > 0) {
+        const [newArr, sum] = downArrFunc(arr);
+        setArr([...newArr]);
+        setScore(score + sum);
+      } else {
+        const [newArr, sum] = upArrFunc(arr);
+        setArr([...newArr]);
+        setScore(score + sum);
+      }
+    }
+
+    setTouchStart(null);
+  };
 
   return (
-    <StyledDivContainer>
+    <StyledDivContainer onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <StyledDivContainer style={{ widows: "450px" }}>
         {!isLose && <StyledH1>2048</StyledH1>}
         {isLose && <StyledH1>Game Over</StyledH1>}
