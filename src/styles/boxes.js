@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 export const StyledBigDiv = styled.div`
-  height: 450;
-  width: 450;
+  height: 450px;
+  width: 450px;
+  max-width: 100%;
+  max-height: 100%;
   background-color: #bbada0;
   border-radius: 6px;
   display: flex;
