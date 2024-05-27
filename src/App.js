@@ -11,26 +11,6 @@ function App() {
   const isLose = isLoseFunc(arr);
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "ArrowUp") {
-        const [newArr, sum] = upArrFunc(arr);
-        setArr([...newArr]);
-        setScore(score + sum);
-      } else if (event.key === "ArrowDown") {
-        const [newArr, sum] = downArrFunc(arr);
-        setArr([...newArr]);
-        setScore(score + sum);
-      } else if (event.key === "ArrowLeft") {
-        const [newArr, sum] = leftArrFunc(arr);
-        setArr([...newArr]);
-        setScore(score + sum);
-      } else if (event.key === "ArrowRight") {
-        const [newArr, sum] = rightArrFunc(arr);
-        setArr([...newArr]);
-        setScore(score + sum);
-      }
-    };
-
     if (best < score) {
       setBest(score);
       localStorage.setItem("score", JSON.stringify(score));
@@ -44,6 +24,26 @@ function App() {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [arr, score, best]);
+
+  const handleKeyDown = (event) => {
+    if (event.key === "ArrowUp") {
+      const [newArr, sum] = upArrFunc(arr);
+      setArr([...newArr]);
+      setScore(score + sum);
+    } else if (event.key === "ArrowDown") {
+      const [newArr, sum] = downArrFunc(arr);
+      setArr([...newArr]);
+      setScore(score + sum);
+    } else if (event.key === "ArrowLeft") {
+      const [newArr, sum] = leftArrFunc(arr);
+      setArr([...newArr]);
+      setScore(score + sum);
+    } else if (event.key === "ArrowRight") {
+      const [newArr, sum] = rightArrFunc(arr);
+      setArr([...newArr]);
+      setScore(score + sum);
+    }
+  };
 
   const handleTouchStart = (e) => {
     const touch = e.touches[0];
@@ -86,7 +86,7 @@ function App() {
   };
 
   return (
-    <StyledDivContainer onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+    <StyledDivContainer onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onKeyDown={handleKeyDown}>
       <StyledDivContainer>
         {!isLose && <StyledH1>2048</StyledH1>}
         {isLose && <StyledH1>Game Over</StyledH1>}
