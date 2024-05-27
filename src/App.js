@@ -61,21 +61,21 @@ function App() {
     const absDeltaY = Math.abs(deltaY);
 
     if (absDeltaX > absDeltaY) {
-      if (deltaX > 0) {
+      if (deltaX > 50) {
         const [newArr, sum] = rightArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
-      } else {
+      } else if (deltaX < -50) {
         const [newArr, sum] = leftArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
       }
     } else {
-      if (deltaY > 0) {
+      if (deltaY > 50) {
         const [newArr, sum] = downArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
-      } else {
+      } else if (deltaY < -50) {
         const [newArr, sum] = upArrFunc(arr);
         setArr([...newArr]);
         setScore(score + sum);
