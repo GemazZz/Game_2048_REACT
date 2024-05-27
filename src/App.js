@@ -1,7 +1,7 @@
+import { useState, useEffect, useRef } from "react";
 import { StyledBigDiv, StyledCell, StyledH1, StyledLoseBtn, StyledDivContainer, StyledMiniHeader, StyledScore } from "./styles/boxes";
 import "./App.css";
 import { rightArrFunc, leftArrFunc, upArrFunc, downArrFunc, startArrFunc, isLoseFunc } from "./helper/helper";
-import { useState, useEffect } from "react";
 
 function App() {
   const [arr, setArr] = useState(JSON.parse(localStorage.getItem("currentArr")) || startArrFunc());
@@ -9,6 +9,8 @@ function App() {
   const [best, setBest] = useState(JSON.parse(localStorage.getItem("score")) || 0);
   const [touchStart, setTouchStart] = useState(null);
   const isLose = isLoseFunc(arr);
+
+  const bigDivRef = useRef(null);
 
   useEffect(() => {
     if (best < score) {
@@ -24,6 +26,30 @@ function App() {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [arr, score, best]);
+
+  useEffect(() => {
+    const bigDiv = bigDivRef.current;
+
+    const disableScroll = (e) => {
+      document.body.style.overflow = "hidden";
+    };
+
+    const enableScroll = (e) => {
+      document.body.style.overflow = "auto";
+    };
+
+    bigDiv.addEventListener("touchstart", disableScroll, { passive: false });
+    bigDiv.addEventListener("touchend", enableScroll, { passive: false });
+    bigDiv.addEventListener("mouseenter", disableScroll);
+    bigDiv.addEventListener("mouseleave", enableScroll);
+
+    return () => {
+      bigDiv.removeEventListener("touchstart", disableScroll);
+      bigDiv.removeEventListener("touchend", enableScroll);
+      bigDiv.removeEventListener("mouseenter", disableScroll);
+      bigDiv.removeEventListener("mouseleave", enableScroll);
+    };
+  }, []);
 
   const handleKeyDown = (event) => {
     if (event.key === "ArrowUp") {
@@ -86,26 +112,28 @@ function App() {
   };
 
   return (
-    <StyledDivContainer onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onKeyDown={handleKeyDown}>
-      <StyledDivContainer>
-        {!isLose && <StyledH1>2048</StyledH1>}
-        {isLose && <StyledH1>Game Over</StyledH1>}
-        <StyledMiniHeader>
-          <div>
-            <StyledScore>Best : {best}</StyledScore>
-            <StyledScore>Score : {score}</StyledScore>
-          </div>
-          <StyledLoseBtn
-            onClick={() => {
-              setArr(startArrFunc());
-              setScore(0);
-            }}
-          >
-            <i className="fa-solid fa-rotate-right fa-2xl" />
-          </StyledLoseBtn>
-        </StyledMiniHeader>
+    <>
+      <StyledDivContainer onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onKeyDown={handleKeyDown}>
+        <StyledDivContainer>
+          {!isLose && <StyledH1>2048</StyledH1>}
+          {isLose && <StyledH1>Game Over</StyledH1>}
+          <StyledMiniHeader>
+            <div>
+              <StyledScore>Best : {best}</StyledScore>
+              <StyledScore>Score : {score}</StyledScore>
+            </div>
+            <StyledLoseBtn
+              onClick={() => {
+                setArr(startArrFunc());
+                setScore(0);
+              }}
+            >
+              <i className="fa-solid fa-rotate-right fa-2xl" />
+            </StyledLoseBtn>
+          </StyledMiniHeader>
+        </StyledDivContainer>
       </StyledDivContainer>
-      <StyledBigDiv>
+      <StyledBigDiv ref={bigDivRef}>
         {arr.map((item, index) => {
           if (item !== 0) {
             return (
@@ -118,7 +146,7 @@ function App() {
           }
         })}
       </StyledBigDiv>
-    </StyledDivContainer>
+    </>
   );
 }
 
