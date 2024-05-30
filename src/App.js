@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { StyledBigDiv, StyledCell, StyledH1, StyledLoseBtn, StyledDivContainer, StyledMiniHeader, StyledScore } from "./styles/boxes";
 import "./App.css";
 import { rightArrFunc, leftArrFunc, upArrFunc, downArrFunc, startArrFunc, isLoseFunc } from "./helper/helper";
@@ -9,8 +9,6 @@ function App() {
   const [best, setBest] = useState(JSON.parse(localStorage.getItem("score")) || 0);
   const [touchStart, setTouchStart] = useState(null);
   const isLose = isLoseFunc(arr);
-
-  const bigDivRef = useRef(null);
 
   useEffect(() => {
     if (best < score) {
@@ -26,30 +24,6 @@ function App() {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [arr, score, best]);
-
-  useEffect(() => {
-    const bigDiv = bigDivRef.current;
-
-    const disableScroll = (e) => {
-      document.body.style.overflow = "hidden";
-    };
-
-    const enableScroll = (e) => {
-      document.body.style.overflow = "auto";
-    };
-
-    bigDiv.addEventListener("touchstart", disableScroll, { passive: false });
-    bigDiv.addEventListener("touchend", enableScroll, { passive: false });
-    bigDiv.addEventListener("mouseenter", disableScroll);
-    bigDiv.addEventListener("mouseleave", enableScroll);
-
-    return () => {
-      bigDiv.removeEventListener("touchstart", disableScroll);
-      bigDiv.removeEventListener("touchend", enableScroll);
-      bigDiv.removeEventListener("mouseenter", disableScroll);
-      bigDiv.removeEventListener("mouseleave", enableScroll);
-    };
-  }, []);
 
   const handleKeyDown = (event) => {
     if (event.key === "ArrowUp") {
@@ -74,6 +48,10 @@ function App() {
   const handleTouchStart = (e) => {
     const touch = e.touches[0];
     setTouchStart({ x: touch.clientX, y: touch.clientY });
+
+    // Prevent scrolling
+    document.body.classList.add("no-scroll");
+    document.addEventListener("touchmove", preventDefault, { passive: false });
   };
 
   const handleTouchEnd = (e) => {
@@ -109,44 +87,44 @@ function App() {
     }
 
     setTouchStart(null);
+
+    // Re-enable scrolling
+    document.body.classList.remove("no-scroll");
+    document.removeEventListener("touchmove", preventDefault);
+  };
+
+  const preventDefault = (e) => {
+    e.preventDefault();
   };
 
   return (
-    <>
-      <StyledDivContainer onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onKeyDown={handleKeyDown}>
-        <StyledDivContainer>
-          {!isLose && <StyledH1>2048</StyledH1>}
-          {isLose && <StyledH1>Game Over</StyledH1>}
-          <StyledMiniHeader>
-            <div>
-              <StyledScore>Best : {best}</StyledScore>
-              <StyledScore>Score : {score}</StyledScore>
-            </div>
-            <StyledLoseBtn
-              onClick={() => {
-                setArr(startArrFunc());
-                setScore(0);
-              }}
-            >
-              <i className="fa-solid fa-rotate-right fa-2xl" />
-            </StyledLoseBtn>
-          </StyledMiniHeader>
-        </StyledDivContainer>
+    <StyledDivContainer onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onKeyDown={handleKeyDown}>
+      <StyledDivContainer>
+        {!isLose && <StyledH1>2048</StyledH1>}
+        {isLose && <StyledH1>Game Over</StyledH1>}
+        <StyledMiniHeader>
+          <div>
+            <StyledScore>Best : {best}</StyledScore>
+            <StyledScore>Score : {score}</StyledScore>
+          </div>
+          <StyledLoseBtn
+            onClick={() => {
+              setArr(startArrFunc());
+              setScore(0);
+            }}
+          >
+            <i className="fa-solid fa-rotate-right fa-2xl" />
+          </StyledLoseBtn>
+        </StyledMiniHeader>
       </StyledDivContainer>
-      <StyledBigDiv ref={bigDivRef}>
-        {arr.map((item, index) => {
-          if (item !== 0) {
-            return (
-              <StyledCell key={index} id={item.toString()}>
-                {item}
-              </StyledCell>
-            );
-          } else {
-            return <StyledCell key={index} id={item.toString()}></StyledCell>;
-          }
-        })}
+      <StyledBigDiv>
+        {arr.map((item, index) => (
+          <StyledCell key={index} id={item.toString()}>
+            {item !== 0 ? item : ""}
+          </StyledCell>
+        ))}
       </StyledBigDiv>
-    </>
+    </StyledDivContainer>
   );
 }
 
