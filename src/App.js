@@ -42,6 +42,9 @@ function App() {
       const [newArr, sum] = rightArrFunc(arr);
       setArr([...newArr]);
       setScore(score + sum);
+    } else if (event.key === " ") {
+      setArr(startArrFunc());
+      setScore(0);
     }
   };
 
@@ -49,7 +52,6 @@ function App() {
     const touch = e.touches[0];
     setTouchStart({ x: touch.clientX, y: touch.clientY });
 
-    // Prevent scrolling
     document.body.classList.add("no-scroll");
     document.addEventListener("touchmove", preventDefault, { passive: false });
   };
@@ -88,7 +90,6 @@ function App() {
 
     setTouchStart(null);
 
-    // Re-enable scrolling
     document.body.classList.remove("no-scroll");
     document.removeEventListener("touchmove", preventDefault);
   };
